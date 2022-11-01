@@ -6,7 +6,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "build:contract": "cd contract && bash build.sh && cd ../..",
-    "deploy:contract": "cd contract && near deploy --wasmFile res/fungible_token.wasm --accountId $ID && cd ../.."
+    "deploy:contract": "near deploy --wasmFile out/greeter.wasm --accountId $ID"
   },
   "dependencies": {
     "core-js": "^3.6.5",
