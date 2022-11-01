@@ -1,59 +1,50 @@
-Fungible Token (FT)
+Non Fungible Token (NFT)
 ===================
 
 To build run:
 
     npm run build:contract
 
-Example implementation of a [Fungible Token] contract which uses [near-contract-standards].
+Example implementation of a [Non Fungible Token] contract which uses [near-contract-standards].
 
 ### Standard deploy
     near login
 
 To make this tutorial easier to copy/paste, we're going to set an environment variable for your account id. In the below command, replace `MY_ACCOUNT_NAME` with the account name you just logged in with, including the `.near`:
 
-    ID=MY_ACCOUNT_NAME
+    NFT_CONTRACT_ID=MY_ACCOUNT_NAME
+    MAIN_ACCOUNT=your-account.testnet
 
 You can tell if the environment variable is set correctly if your command line prints the account name after this command:
 
-    echo $ID
+    echo $NFT_CONTRACT_ID
+    echo $MAIN_ACCOUNT
 
 Now we can deploy the compiled contract in this example to your account:
 
-    near deploy --wasmFile res/fungible_token.wasm --accountId $ID
+    near deploy --wasmFile ../out/main.wasm --accountId $NFT_CONTRACT_ID
 
 OR
 
     npm run deploy:contract
 
-FT contract should be initialized before usage. You can read more about metadata at ['nomicon.io'](https://nomicon.io/Standards/FungibleToken/Metadata.html#reference-level-explanation). Modify the parameters and create a token:
+Initialize Your Contract
 
-    near call $ID new '{"owner_id": "'$ID'", "total_supply": "1000000000000000", "metadata": { "spec": "ft-1.0.0", "name": "Example Token Name", "symbol": "EXLT", "decimals": 8 }}' --accountId $ID
+    near call $NFT_CONTRACT_ID new_default_meta '{"owner_id": "'$NFT_CONTRACT_ID'"}' --accountId $NFT_CONTRACT_ID
 
-Get metadata:
+View Contracts Meta Data
+    
+    near view $NFT_CONTRACT_ID nft_metadata
 
-    near view $ID ft_metadata
+Minting Token
 
+    near call $NFT_CONTRACT_ID nft_mint '{"token_id": "token-1", "metadata": {"title": "My Non Fungible Team Token", "description": "The Team Most Certainly Goes :)", "media": "https://bafybeiftczwrtyr3k7a2k4vutd3amkwsmaqyhrdzlhvpt33dyjivufqusq.ipfs.dweb.link/goteam-gif.gif"}, "receiver_id": "'$MAIN_ACCOUNT'"}' --accountId $MAIN_ACCOUNT --amount 0.1
 
-Transfer Example
----------------
+View NFT Information
 
-Let's set up an account to transfer some tokens to. These account will be a sub-account of the NEAR account you logged in with.
-
-    near create-account bob.$ID --masterAccount $ID --initialBalance 1
-
-Add storage deposit for Bob's account:
-
-    near call $ID storage_deposit '' --accountId bob.$ID --amount 0.00125
+    near view $NFT_CONTRACT_ID nft_token '{"token_id": "token-1"}'
 
 
-Check balance of Bob's account, it should be `0` for now:
+Transferring NFTs
 
-    near view $ID ft_balance_of '{"account_id": "'bob.$ID'"}'
-
-Transfer tokens to Bob from the contract that minted these fungible tokens, exactly 1 yoctoNEAR of deposit should be attached:
-
-    near call $ID ft_transfer '{"receiver_id": "'bob.$ID'", "amount": "19"}' --accountId $ID --amount 0.000000000000000000000001
-
-
-Check the balance of Bob again with the command from before and it will now return `19`.
+    near call $NFT_CONTRACT_ID nft_transfer '{"receiver_id": "$MAIN_ACCOUNT_2", "token_id": "token-1", "memo": "Go Team :)"}' --accountId $MAIN_ACCOUNT --depositYocto 1
