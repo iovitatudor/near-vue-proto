@@ -22,8 +22,8 @@ export async function initContract() {
         walletConnection.account(),
         nearConfig.contractName,
         {
-            viewMethods: ['ft_balance_of'],
-            changeMethods: ['ft_transfer'],
+            viewMethods: [],
+            changeMethods: ['transfer_money'],
             sender: walletConnection.getAccountId(),
         }
     );

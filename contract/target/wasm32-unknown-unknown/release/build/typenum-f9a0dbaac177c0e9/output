@@ -1,0 +1,2 @@
+cargo:rustc-env=TYPENUM_BUILD_CONSTS=/Users/tudoriovita/Documents/actual/near-vue-proto/contract/target/wasm32-unknown-unknown/release/build/typenum-f9a0dbaac177c0e9/out/consts.rs
+cargo:rustc-env=TYPENUM_BUILD_OP=/Users/tudoriovita/Documents/actual/near-vue-proto/contract/target/wasm32-unknown-unknown/release/build/typenum-f9a0dbaac177c0e9/out/op.rs

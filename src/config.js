@@ -1,4 +1,4 @@
-const CONTRACT_NAME = process.env.CONTRACT_NAME || 'doors.testnet';
+const CONTRACT_NAME = process.env.CONTRACT_NAME || 'contract1.vue1.testnet';
 
 function getConfig(env) {
     switch(env) {
