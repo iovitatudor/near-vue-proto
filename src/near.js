@@ -22,8 +22,8 @@ export async function initContract() {
         walletConnection.account(),
         nearConfig.contractName,
         {
-            viewMethods: ['ft_balance_of'],
-            changeMethods: ['ft_transfer'],
+            viewMethods: ['nft_tokens_for_owner', 'nft_tokens', 'nft_token'],
+            changeMethods: ['nft_mint', 'nft_transfer'],
             sender: walletConnection.getAccountId(),
         }
     );
