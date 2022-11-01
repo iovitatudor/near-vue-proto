@@ -6,7 +6,7 @@
             :walletConnection="walletConnection"/>
 
     <v-main>
-      <Wallet v-if="currentUser"
+      <Transaction v-if="currentUser"
               :contract="contract"
               :currentUser="currentUser"/>
     </v-main>
@@ -15,7 +15,7 @@
 
 <script>
 import Header from "./components/Header";
-import Wallet from "./components/Wallet";
+import Transaction from "./components/Transaction";
 
 export default {
   name: 'App',
@@ -24,7 +24,7 @@ export default {
 
   components: {
     Header,
-    Wallet,
+    Transaction,
   },
 
   data: () => ({
