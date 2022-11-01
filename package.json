@@ -1,0 +1,27 @@
+{
+  "name": "near-vue-proto",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "build:contract": "cd contract && bash build.sh && cd ../..",
+    "deploy:contract": "cd contract && near deploy --wasmFile res/fungible_token.wasm --accountId $ID && cd ../.."
+  },
+  "dependencies": {
+    "core-js": "^3.6.5",
+    "vue": "^2.6.11",
+    "vuetify": "^2.6.0",
+    "big.js": "^6.2.1"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "~4.5.10",
+    "@vue/cli-service": "~4.5.10",
+    "near-api-js": "^1.1.0",
+    "sass": "~1.32.0",
+    "sass-loader": "^10.0.0",
+    "vue-cli-plugin-vuetify": "~2.5.8",
+    "vue-template-compiler": "^2.6.11",
+    "vuetify-loader": "^1.7.0"
+  }
+}
