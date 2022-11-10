@@ -22,7 +22,7 @@ use near_contract_standards::fungible_token::FungibleToken;
 use near_sdk::borsh::{self, BorshDeserialize, BorshSerialize};
 use near_sdk::collections::LazyOption;
 use near_sdk::json_types::U128;
-use near_sdk::{env, log, near_bindgen, AccountId, Balance, PanicOnDefault, PromiseOrValue};
+use near_sdk::{env, log, near_bindgen, AccountId, Balance, PanicOnDefault, PromiseOrValue, Promise};
 
 #[near_bindgen]
 #[derive(BorshDeserialize, BorshSerialize, PanicOnDefault)]
@@ -57,7 +57,7 @@ impl Contract {
     /// Initializes the contract with the given total supply owned by the given `owner_id` with
     /// the given fungible token metadata.
     #[init]
-    pub fn new(
+    pub fn new (
         owner_id: AccountId,
         total_supply: U128,
         metadata: FungibleTokenMetadata,
@@ -86,6 +86,16 @@ impl Contract {
     fn on_tokens_burned(&mut self, account_id: AccountId, amount: Balance) {
         log!("Account @{} burned {}", account_id, amount);
     }
+
+    #[payable]
+    pub fn transfer(&mut self, account_id: AccountId, receiver_id: AccountId, amount: U128) {
+        let total = env::attached_deposit();
+        Promise::new(receiver_id).transfer(total as u128);
+
+        self.storage_withdraw(None);
+        self.ft_transfer(account_id, amount.into(), None);
+    }
+
 }
 
 near_contract_standards::impl_fungible_token_core!(Contract, token, on_tokens_burned);
